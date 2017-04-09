@@ -18,7 +18,7 @@ const styles = {
 export default function Console(props: Props) {
     return (
         <div style={styles.base}>
-            {props.history.map((input, key) => <div key={key}>$ {input}</div>)}
+            {props.history.map((input, key) => <div key={key}>{input[0]} {input[1]}</div>)}
         </div>
     );
 }

@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import minimist from 'minimist';
 import Header from './Header';
 import Pane from './Pane';
 import Console from './Console';
@@ -11,6 +12,8 @@ interface Props {
     width?: number,
     // window height
     height?: number,
+    // list of extensions/commands
+    extensions: Array<any>;
     children?: React.Element<any>,
 }
 
@@ -38,7 +41,7 @@ export default class Terminal extends React.Component {
     };
 
     state: {
-        history: Array<string>,
+        history: Array<[string, string]>,
         input: string,
     };
 
@@ -109,7 +112,35 @@ export default class Terminal extends React.Component {
     }
 
     enter() {
-        this.setState(prevState => ({ history: [...prevState.history, prevState.input], input: '' }), this.updateCaretPosition);
+        this.setState(prevState => {
+            const output = this.run(this.state.input);
+            return {
+                history: [
+                    ...prevState.history,
+                    ['$', prevState.input],
+                    ['', output],
+                ],
+                input: '',
+            };
+        }, this.updateCaretPosition);
+    }
+
+    run(input: string) {
+        // mock `process.argv`
+        const args = minimist([ __dirname, __filename, ...input.split(' ')]);
+        const parts = args._.slice(2);
+        const cmd = parts[0].toLowerCase();
+
+        for (let i = 0; i < this.props.extensions.length; i++) {
+            const ext = this.props.extensions[i];
+            if (ext.name.toLowerCase() === cmd) {
+                return ext(parts);
+            }
+        }
+    }
+
+    writeLine(text: string) {
+        this.setState(prevState => ({ history: [...prevState.history, ['', text]] }));
     }
 
     componentDidMount() {

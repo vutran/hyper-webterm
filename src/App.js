@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Terminal from './components/Terminal';
+import echo from './extensions/echo';
 
 interface Props { }
 
@@ -13,10 +14,23 @@ const styles = {
 };
 
 export default class App extends React.Component {
+    state: {
+        theme: string,
+    };
+
+    state = {
+        theme: null,
+    };
+
     render() {
         return (
             <div style={styles.base}>
-                <Terminal width={500} />
+                <Terminal
+                    width={500}
+                    extensions={[
+                        echo,
+                    ]}
+                    />
             </div>
         );
     }
