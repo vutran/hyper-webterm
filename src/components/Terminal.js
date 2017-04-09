@@ -57,6 +57,8 @@ export default class Terminal extends React.Component {
         const key = e.key;
         const ctrlKey = e.ctrlKey;
 
+        console.log(e);
+
         if (key.toLowerCase() === 'l' && ctrlKey) {
             this.clear();
             return;
@@ -83,7 +85,9 @@ export default class Terminal extends React.Component {
             case 'Tab':
             case 'Space':
             default:
-                this.updateInput(e.key);
+                if (key.length === 1) {
+                    this.updateInput(key);
+                }
                 break;
         }
     }
