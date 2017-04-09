@@ -1,0 +1,48 @@
+{
+  "name": "hyper-webterm",
+  "description": "Demo web-based terminal UI based on Hyper",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vutran/hyper-webterm.git"
+  },
+  "author": "Vu Tran <vu@vu-tran.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vutran/hyper-webterm/issues"
+  },
+  "homepage": "https://github.com/vutran/hyper-webterm#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "flow-bin": "^0.43.1",
+    "flow-typed": "^2.0.0",
+    "husky": "^0.13.3",
+    "now": "^4.10.3",
+    "prettier": "^0.22.0",
+    "serve": "^5.1.2",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "react": "^15.5.3",
+    "react-dom": "^15.5.3"
+  },
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "build": "webpack -p",
+    "flow": "flow",
+    "lint": "prettier --parser=flow --single-quote --trailing-comma=es5 --print-width=90 --tab-width=4 --write 'lib/*.js' 'index.js'",
+    "precommit": "npm run lint",
+    "prepublish": "npm run build",
+    "start": "serve"
+  }
+}
