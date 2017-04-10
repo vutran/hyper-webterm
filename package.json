@@ -35,7 +35,8 @@
   "dependencies": {
     "minimist": "^1.2.0",
     "react": "^15.5.3",
-    "react-dom": "^15.5.3"
+    "react-dom": "^15.5.3",
+    "unfetch": "^2.1.2"
   },
   "scripts": {
     "dev": "webpack-dev-server",

@@ -3,6 +3,7 @@
 import React from 'react';
 import Terminal from './components/Terminal';
 import echo from './extensions/echo';
+import themeChooser from './extensions/theme-chooser';
 
 interface Props { }
 
@@ -29,6 +30,7 @@ export default class App extends React.Component {
                     width={500}
                     extensions={[
                         echo,
+                        themeChooser,
                     ]}
                     />
             </div>

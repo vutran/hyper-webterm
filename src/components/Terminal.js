@@ -2,6 +2,7 @@
 
 import React from 'react';
 import minimist from 'minimist';
+import { pascalize } from '../utils';
 import Header from './Header';
 import Pane from './Pane';
 import Console from './Console';
@@ -129,14 +130,16 @@ export default class Terminal extends React.Component {
         // mock `process.argv`
         const args = minimist([ __dirname, __filename, ...input.split(' ')]);
         const parts = args._.slice(2);
-        const cmd = parts[0].toLowerCase();
+        const cmd = pascalize(parts[0]);
 
         for (let i = 0; i < this.props.extensions.length; i++) {
-            const ext = this.props.extensions[i];
-            if (ext.name.toLowerCase() === cmd) {
-                return ext(parts);
+            const Ext = this.props.extensions[i];
+            if (Ext.name === cmd) {
+                return <Ext args={parts} />;
             }
         }
+
+        return <div>command not found: {parts[0]}</div>;
     }
 
     writeLine(text: string) {

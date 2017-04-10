@@ -1,5 +1,13 @@
 // @flow
 
-export default function echo(args: Array<string>): string {
-    return args.slice(1).join(' ');
+import React from 'react';
+
+export default class Echo extends React.Component {
+    props: {
+        args: Array<string>,
+    };
+
+    render() {
+        return <div>{this.props.args.slice(1).join(' ')}</div>;
+    }
 }
