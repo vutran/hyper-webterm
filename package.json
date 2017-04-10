@@ -47,5 +47,8 @@
     "precommit": "npm run lint",
     "prepublish": "npm run build",
     "start": "serve"
+  },
+  "now": {
+    "alias": "hyper-webterm"
   }
 }
