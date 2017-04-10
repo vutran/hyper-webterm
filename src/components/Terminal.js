@@ -132,11 +132,11 @@ export default class Terminal extends React.Component {
         // mock `process.argv`
         const args = minimist([ __dirname, __filename, ...input.split(' ')]);
         const parts = args._.slice(2);
-        const cmd = pascalize(parts[0]);
+        const cmd = parts[0].toLowerCase();
 
         for (let i = 0; i < this.props.extensions.length; i++) {
             const Ext = this.props.extensions[i];
-            if (Ext.name === cmd) {
+            if (Ext.command === cmd) {
                 return <Ext args={parts} onAction={this.handleAction} />;
             }
         }

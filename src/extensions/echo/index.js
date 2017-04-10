@@ -3,6 +3,8 @@
 import React from 'react';
 
 export default class Echo extends React.Component {
+    static command: string;
+
     props: {
         args: Array<string>,
     };
@@ -11,3 +13,5 @@ export default class Echo extends React.Component {
         return <div>{this.props.args.slice(1).join(' ')}</div>;
     }
 }
+
+Echo.command = 'echo';

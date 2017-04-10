@@ -3,7 +3,9 @@
 import React from 'react';
 import unfetch from 'unfetch';
 
-export default class ThemeChooser extends React.Component {
+export default class Theme extends React.Component {
+    static command: string;
+
     props: {
         args: Array<string>,
         onAction: (body: { type: string, body: string }) => void,
@@ -26,3 +28,5 @@ export default class ThemeChooser extends React.Component {
         return null;
     }
 }
+
+Theme.command = 'theme';
