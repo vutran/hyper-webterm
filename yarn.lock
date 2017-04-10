@@ -720,6 +720,10 @@ babel-runtime@^6.18.0, babel-runtime@^6.22.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
+babel-standalone@^6.24.0:
+  version "6.24.0"
+  resolved "https://registry.yarnpkg.com/babel-standalone/-/babel-standalone-6.24.0.tgz#9aca8c23b8a7f84ec0765fcb9670cb841af394b2"
+
 babel-template@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.24.1.tgz#04ae514f1f93b3a2537f2a0f60a5a45fb8308333"

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import minimist from 'minimist';
+import config from '../config';
 import { pascalize } from '../utils';
 import Header from './Header';
 import Pane from './Pane';
@@ -18,23 +19,6 @@ interface Props {
     children?: React.Element<any>,
 }
 
-const styles = {
-    base: {
-        display: 'flex',
-        flexDirection: 'column',
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderRadius: 4,
-        borderColor: '#333',
-        fontSize: 12,
-        fontFamily: 'Menlo, "DejaVu Sans Mono", "Lucida Console", monospace',
-        fontSmoothingOverride: 'antialiased',
-        backgroundColor: '#000',
-        color: '#fff',
-        padding: '12px 14px',
-    },
-};
-
 export default class Terminal extends React.Component {
     static defaultProps = {
         width: 500,
@@ -42,11 +26,15 @@ export default class Terminal extends React.Component {
     };
 
     state: {
+        config: any;
         history: Array<[string, string]>,
         input: string,
+        decorateConfig?: any;
     };
 
     state = {
+        // loaded configuration
+        config: {},
         // input history
         history: [],
         // current caret input
@@ -55,13 +43,27 @@ export default class Terminal extends React.Component {
         row: 0,
         // current caret column
         col: 0,
+        // optional user-decorated config
+        decorateConfig: null,
     };
+
+    handleAction = (message: any) => {
+        switch (message.type) {
+            case 'applyTheme':
+                {
+                    const config = eval(message.body);
+                    // TODO: pass current config
+                    this.setState({ decorateConfig: config({}) });
+                }
+                break;
+        }
+    }
 
     handleKeyDown = (e: KeyboardEvent) => {
         const key = e.key;
         const ctrlKey = e.ctrlKey;
 
-        console.log(e);
+        console.debug('KeyboadEvent:', e);
 
         if (key.toLowerCase() === 'l' && ctrlKey) {
             this.clear();
@@ -135,7 +137,7 @@ export default class Terminal extends React.Component {
         for (let i = 0; i < this.props.extensions.length; i++) {
             const Ext = this.props.extensions[i];
             if (Ext.name === cmd) {
-                return <Ext args={parts} />;
+                return <Ext args={parts} onAction={this.handleAction} />;
             }
         }
 
@@ -146,11 +148,39 @@ export default class Terminal extends React.Component {
         this.setState(prevState => ({ history: [...prevState.history, ['', text]] }));
     }
 
+    updateConfig(newConfig: any) {
+        this.setState({ config: newConfig });
+    }
+
+    getDecoratedConfig() {
+        return Object.assign({}, this.state.config, this.state.decorateConfig);
+    }
+
     componentDidMount() {
+        this.updateConfig(config);
         document.addEventListener('keydown', this.handleKeyDown);
     }
 
     render() {
+        const decoratedConfig = this.getDecoratedConfig();
+
+        const styles = {
+            base: {
+                display: 'flex',
+                flexDirection: 'column',
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderRadius: 4,
+                borderColor: decoratedConfig.borderColor,
+                fontSize: decoratedConfig.fontSize,
+                fontFamily: decoratedConfig.fontFamily,
+                fontSmoothingOverride: 'antialiased',
+                backgroundColor: decoratedConfig.backgroundColor,
+                color: decoratedConfig.foregroundColor,
+                padding: decoratedConfig.padding,
+            },
+        };
+
         const size = {
             width: this.props.width,
             height: this.props.height,
