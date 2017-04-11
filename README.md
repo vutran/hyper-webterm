@@ -8,6 +8,8 @@ A browser-based interface of your favorite [Hyper](https://hyper.is) terminal.
 
 ***Note:*** This project is highly experiemental and obviously does not emulate the full desktop experience.
 
+![](screenshot.gif?raw=true)
+
 ## License
 
 MIT © [Vu Tran](https://github.com/vutran/)
