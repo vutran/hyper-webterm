@@ -46,7 +46,8 @@
     "lint": "prettier --parser=flow --single-quote --trailing-comma=es5 --print-width=90 --tab-width=4 --write 'lib/*.js' 'index.js'",
     "precommit": "npm run lint",
     "prepublish": "npm run build",
-    "start": "serve"
+    "start": "serve",
+    "deploy": "now && now alias"
   },
   "now": {
     "alias": "hyper-webterm"
