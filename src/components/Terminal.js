@@ -70,6 +70,11 @@ export default class Terminal extends React.Component {
             return;
         }
 
+        if (key.toLowerCase() === 'c' && ctrlKey) {
+            this.kill();
+            return;
+        }
+
         switch (key) {
             case 'Backspace':
                 this.backspace();
@@ -116,12 +121,32 @@ export default class Terminal extends React.Component {
 
     enter() {
         this.setState(prevState => {
-            const output = this.run(this.state.input);
+            if (prevState.input.length) {
+                const output = this.run(prevState.input);
+                return {
+                    history: [
+                        ...prevState.history,
+                        ['$', prevState.input],
+                        ['', output],
+                    ],
+                    input: '',
+                };
+            }
+            return {
+                history: [
+                    ...prevState.history,
+                    ['$', ''],
+                ],
+            };
+        }, this.updateCaretPosition);
+    }
+
+    kill() {
+        this.setState(prevState => {
             return {
                 history: [
                     ...prevState.history,
                     ['$', prevState.input],
-                    ['', output],
                 ],
                 input: '',
             };
