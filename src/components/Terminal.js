@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
+import pascalize from 'pascalize';
 import minimist from 'minimist';
 import config from '../config';
-import { pascalize } from '../utils';
 import Header from './Header';
 import Pane from './Pane';
 import Console from './Console';
